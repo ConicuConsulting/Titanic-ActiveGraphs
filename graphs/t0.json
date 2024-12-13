@@ -1,0 +1,93 @@
+{
+    "id": "Titanic_Base",
+    "name": "Captain's Bridge",
+    "type": "Root",
+    "description": "The central node representing the Titanic's core structure, connecting all ship elements hierarchically.",
+    "attributes": {
+        "state": "operational",
+        "timestamp": null,
+        "environment": "normal"
+    },
+    "layers": [
+        {
+            "id": "Temporal_0",
+            "name": "Ship Structure",
+            "description": "Static hierarchical representation of the Titanic, organized by levels and compartments.",
+            "nodes": {
+                "Deck_A": {
+                    "type": "Level",
+                    "description": "Top passenger deck",
+                    "attributes": {
+                        "accessibility": "open",
+                        "state": "intact"
+                    }
+                },
+                "Deck_B": {
+                    "type": "Level",
+                    "description": "Second passenger deck",
+                    "attributes": {
+                        "accessibility": "open",
+                        "state": "intact"
+                    }
+                },
+                "Engine_Room": {
+                    "type": "Level",
+                    "description": "Engine and boiler compartments",
+                    "attributes": {
+                        "accessibility": "restricted",
+                        "state": "intact"
+                    }
+                },
+                "Lifeboat_Stations": {
+                    "type": "Safety",
+                    "description": "Lifeboat deployment stations",
+                    "attributes": {
+                        "availability": "ready",
+                        "state": "secure"
+                    }
+                }
+            },
+            "relationships": [
+                {
+                    "source": "Captain's Bridge",
+                    "target": "Deck_A",
+                    "relationship_type": "parent_of"
+                },
+                {
+                    "source": "Deck_A",
+                    "target": "Deck_B",
+                    "relationship_type": "parent_of"
+                },
+                {
+                    "source": "Deck_B",
+                    "target": "Engine_Room",
+                    "relationship_type": "parent_of"
+                },
+                {
+                    "source": "Deck_A",
+                    "target": "Lifeboat_Stations",
+                    "relationship_type": "connects_to",
+                    "pathway": {
+                        "type": "corridor",
+                        "distance": 50
+                    }
+                }
+            ]
+        }
+    ],
+    "dependency_index": {
+        "cube_reference": "Titanic_AGN",
+        "dependencies": [
+            {
+                "type": "Temporal",
+                "description": "Captures state evolution across time layers.",
+                "initial_state": "static"
+            },
+            {
+                "type": "Dynamic Relationships",
+                "description": "Captures interactions between passengers, crew, and compartments.",
+                "adaptive": true
+            }
+        ]
+    }
+}
